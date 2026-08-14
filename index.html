@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback & Support Portal</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+body {
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #090a0f;
+color: #fff;
+overflow: hidden;
+}
+
+/* Star Canvas Background */
+#starCanvas {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 1;
+}
+
+/* Card and Form Styles */
+.box {
+position: relative;
+z-index: 2;
+background: rgba(255, 255, 255, 0.08);
+backdrop-filter: blur(8px);
+padding: 30px;
+border-radius: 12px;
+width: 320px;
+border: 1px solid rgba(255, 255, 255, 0.2);
+box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+text-align: center;
+}
+
+/* Seed Source E-Commerce Branding Style */
+.brand-title {
+font-size: 13px;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+color: #818cf8;
+margin-bottom: 6px;
+}
+
+h2 {
+margin-bottom: 15px;
+}
+
+input, textarea, button {
+width: 100%;
+margin: 10px 0;
+padding: 10px;
+border-radius: 6px;
+border: 1px solid rgba(255, 255, 255, 0.3);
+background: rgba(0, 0, 0, 0.4);
+color: #fff;
+outline: none;
+}
+
+button {
+background: #6366f1;
+border: none;
+font-weight: bold;
+cursor: pointer;
+transition: 0.3s;
+}
+
+button:hover { background: #4f46e5; }
+.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<!-- Canvas for Moving Stars -->
+<canvas id="starCanvas"></canvas>
+
+<!-- 1. Login Form -->
+<div class="box" id="loginBox">
+<p class="brand-title">S̸̘̠̳͔̯̪̻͆̐̃̉̔͜ḭ̷̮̩̭̓̽̏͂ş̵͇̣̘̟̼̻̯̰̭͆̈́͑̽͘h̴̼̰͈͖̟̫͂̎̓̀̇͛̒̇̔y̸̺̻̩̥̞͖͗̄̎̑̚â̶̙͙͉̞͓͔̯̦̟͜
+
+ Source E-Commerce</p>
+<h2>Login</h2>
+<form onsubmit="showFeedback(event)">
+<input type="text" id="uname" placeholder="Your Name" required>
+<input type="email" placeholder="Email Address" required>
+<button type="submit">Log In</button>
+</form>
+</div>
+
+<!-- 2. Feedback Form -->
+<div class="box hidden" id="feedbackBox">
+<h2 id="msg">Feedback</h2>
+<form onsubmit="alert('Feedback Submitted Successfully!'); event.preventDefault();">
+<textarea placeholder="Enter your feedback here..." rows="4" required></textarea>
+<button type="submit">Submit</button>
+</form>
+</div>
+
+<script>
+// Switch from Login to Feedback page
+function showFeedback(e) {
+e.preventDefault();
+document.getElementById('msg').innerText = "Welcome, " + document.getElementById('uname').value;
+document.getElementById('loginBox').classList.add('hidden');
+document.getElementById('feedbackBox').classList.remove('hidden');
+}
+
+// Moving Stars Animation Logic
+const canvas = document.getElementById('starCanvas');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const stars = [];
+const numStars = 100;
+
+for (let i = 0; i < numStars; i++) {
+stars.push({
+x: Math.random() * canvas.width,
+y: Math.random() * canvas.height,
+radius: Math.random() * 1.5,
+speed: Math.random() * 0.5 + 0.2
+});
+}
+
+function animateStars() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.fillStyle = '#ffffff';
+
+stars.forEach(star => {
+ctx.beginPath();
+ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+ctx.fill();
+
+star.y -= star.speed;
+if (star.y < 0) {
+star.y = canvas.height;
+star.x = Math.random() * canvas.width;
+}
+});
+
+requestAnimationFrame(animateStars);
+}
+
+animateStars();
+</script>
+</body>
+</html>
